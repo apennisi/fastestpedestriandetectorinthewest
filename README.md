@@ -2,7 +2,7 @@
 This is my version of the Fastest Pedestrian Detector in the West based on the paper:
 * P. Dollár, S. Belongie and P. Perona "_The Fastest Pedestrian Detector in the West_", BMVC 2010.
 
-This version implements only the detection part. The training part is the one developed in the P. Dollàr toolbox ([ling](https://github.com/pdollar/toolbox/tree/master/detector)).
+This version implements only the detection part. The training part is the one developed in the P. Dollàr toolbox ([link](https://github.com/pdollar/toolbox/tree/master/detector)).
 
 ##Requirements
 * OpenCv
