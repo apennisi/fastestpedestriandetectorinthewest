@@ -5,7 +5,7 @@ This is my version of the Fastest Pedestrian Detector in the West based on the p
 This version implements only the detection part. For the training part you have to use the P. Dollàr toolbox ([link](https://github.com/pdollar/toolbox/tree/master/detector)).
 
 ##Requirements
-* OpenCv
+* OpenCV
 * OpenMP
 * SSE
 * Boost
