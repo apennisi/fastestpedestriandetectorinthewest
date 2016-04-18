@@ -20,3 +20,19 @@ which can be achieved by the following command sequence:
 * cmake ../
 * make -j\<number-of-cores+1\>
 
+##How to use
+
+###MATLAB - Training
+In the file _acfDemoInria_, after the line:
+```matlab
+detector = acfTrainIntegral( opts );
+```
+
+add this code:
+```matlab
+filename = 'models/inria_detector_integral.xml';
+isTrained = exist(filename,'file');
+if( ~isTrained )
+    savetoxml(detector, 'models/inria_detector_integral.xml');
+end
+```
