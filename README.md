@@ -23,6 +23,7 @@ which can be achieved by the following command sequence:
 ##How to use
 
 ###MATLAB - Training
+Put the file _savetoxml_ inside the folder toolbox/detector.
 In the file _acfDemoInria_, after the line:
 ```matlab
 detector = acfTrainIntegral( opts );
@@ -42,3 +43,5 @@ Go to the bin diretory and launch the program with the following command:
 ```bash
 ./fpdw ../detector/inria_detector.xml /path/to/the/image.jpg
 ```
+
+The detector is already trained with the complete INRIA dataset. So, you can directly use the xml file inside the _detector_ folder.
