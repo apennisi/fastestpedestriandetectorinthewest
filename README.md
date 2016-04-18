@@ -30,9 +30,15 @@ detector = acfTrainIntegral( opts );
 
 add this code:
 ```matlab
-filename = 'models/inria_detector_integral.xml';
+filename = 'models/inria_detector.xml';
 isTrained = exist(filename,'file');
 if( ~isTrained )
-    savetoxml(detector, 'models/inria_detector_integral.xml');
+    savetoxml(detector, 'models/inria_detector.xml');
 end
+```
+
+###C++ - Detection
+Go to the bin diretory and launch the program with the following command:
+```bash
+./fpdw ../detector/inria_detector.xml /path/to/the/image.jpg
 ```

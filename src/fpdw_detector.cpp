@@ -138,7 +138,7 @@ void FPDWDetector::process(const cv::Mat &_img)
 
     //BUILD PYRAMID
     chnsPyramid(m_cls.opts().pPyramid);
-#if 1
+
     cv::Mat bbs, image;
     for(uint i = 0; i < nScales; ++i)
     {
@@ -165,7 +165,6 @@ void FPDWDetector::process(const cv::Mat &_img)
             m_bboxes.push_back(bbox[i]);
         }
     }
-#endif
 }
 
 void FPDWDetector::chnsPyramid(const fpdw::structs::Pyramid &_pyr)
@@ -181,10 +180,7 @@ void FPDWDetector::chnsPyramid(const fpdw::structs::Pyramid &_pyr)
     std::vector<cv::Mat> internal_data;
     cv::Mat image_data;
     utils::RgbConvertion::process(m_img, _pyr.pChns.pColor.colorSpace, luv);
-
-
-#if 1
-
+    
     //Compute image pyramid
     int isr;
     for(const auto &i : isR)
@@ -249,7 +245,6 @@ void FPDWDetector::chnsPyramid(const fpdw::structs::Pyramid &_pyr)
         }
     }
 
-#endif
 }
 
 void FPDWDetector::chnsCompute(const cv::Mat &_img, const fpdw::structs::Chns &_chns,
@@ -494,7 +489,7 @@ cv::Mat FPDWDetector::detect(const int &_i)
 
     cv::Mat_<float> output(cv::Size(5, m));
 
-    //#pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() )
+    #pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() )
     for(uint i = 0; i < m; ++i)
     {
         output.at<float>(i, 0) = ((cs[i]*stride) + float(m_shift[1])) / float(m_scaleHw.at(_i).y);
