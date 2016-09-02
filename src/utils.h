@@ -46,7 +46,6 @@ namespace fpdw
 {
     namespace utils
     {
-    {
         class Convolution
         {
             public:
