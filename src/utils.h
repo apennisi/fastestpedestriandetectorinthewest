@@ -36,6 +36,7 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 #include <omp.h>
+#include <typeinfo>
 
 #include "sse.hpp"
 #include "structs.h"
@@ -44,6 +45,7 @@
 namespace fpdw
 {
     namespace utils
+    {
     {
         class Convolution
         {
