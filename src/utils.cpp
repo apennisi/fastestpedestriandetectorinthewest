@@ -238,7 +238,7 @@ void RgbConvertion::process(const cv::Mat &_img, const structs::ColorSpace &_col
 
     float *ptr = float_image.ptr<float>(0);
 
-    float *J;
+    float *J=nullptr;
     if(_color == structs::ColorSpace::FPDW_ORIG)
     {
         if(_img.type() == CV_32FC3)
@@ -263,7 +263,8 @@ void RgbConvertion::process(const cv::Mat &_img, const structs::ColorSpace &_col
 
     _output = matToCvMat3x(J, _img.size());
 
-    free(J);
+    if(J)
+    {free(J);}
 }
 
 void RgbConvertion::rgb2luv_setup(float z, float *mr, float *mg, float *mb, float &minu, float &minv, float &un, float &vn, float *lTable)
@@ -480,27 +481,33 @@ cv::Mat GradientMag::gradientHist(const cv::Mat &_img, const cv::Mat &_s, const 
     int hb = h/_binSize;
     int wb = w/_binSize;
     int nChns = (useHog == 0) ? _p.nOrients : ( useHog == 1 ? _p.nOrients*4 : _p.nOrients*3+5 );
-    float *H = (float *) calloc(wb*hb*nChns, sizeof(float));
-    if(_p.nOrients == 0) return cv::Mat();
+    if(_p.nOrients != 0)
+    {
+        float *H = (float *) calloc(wb*hb*nChns, sizeof(float));
 
-    if(useHog == 0)
-    {
-        gradHist(M, S, H, h, w, _binSize, _p.nOrients, _p.softBin, _full);
-    }
-    else if(useHog == 1)
-    {
-        hog( M, S, H, h, w, _binSize, _p.nOrients, _p.softBin, _full, clipHog );
+        if(useHog == 0)
+        {
+            gradHist(M, S, H, h, w, _binSize, _p.nOrients, _p.softBin, _full);
+        }
+        else if(useHog == 1)
+        {
+            hog( M, S, H, h, w, _binSize, _p.nOrients, _p.softBin, _full, clipHog );
+        }
+        else
+        {
+            fhog( M, S, H, h, w, _binSize, _p.nOrients, _p.softBin, clipHog );
+        }
+
+        cv::Mat out = matToCvMat6x(H, cv::Size(wb,hb));
+
+        free(H);
+
+        return out;
     }
     else
     {
-        fhog( M, S, H, h, w, _binSize, _p.nOrients, _p.softBin, clipHog );
+        return cv::Mat();
     }
-
-    cv::Mat out = matToCvMat6x(H, cv::Size(wb,hb));
-
-    free(H);
-
-    return out;
 }
 
 void GradientMag::gradHist(float *M, float *O, float *H, int h, int w, int bin, int nOrients, int softBin, bool full)

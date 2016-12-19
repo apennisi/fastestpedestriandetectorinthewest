@@ -25,7 +25,7 @@ fprintf(fid, '\t\t\t\t<shrink>%d</shrink>\n', chns.shrink);
 fprintf(fid, '\t\t\t\t<color>\n');
 fprintf(fid, '\t\t\t\t\t<enabled>%d</enabled>\n', chns.pColor.enabled);
 fprintf(fid, '\t\t\t\t\t<smooth>%d</smooth>\n', chns.pColor.smooth);
-fprintf(fid, '\t\t\t\t\t<colorspace>luv</colorspace>\n');
+fprintf(fid, '\t\t\t\t\t<colorspace>1</colorspace>\n');
 fprintf(fid, '\t\t\t\t</color>\n');
 
 fprintf(fid, '\t\t\t\t<gradmag>\n');
