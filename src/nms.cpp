@@ -63,7 +63,7 @@ void Nms::process(std::vector<cv::Rect> &_bboxes, std::vector<float> &_confidenc
     cv::Mat column = _bbs.col(4) > m_thr;
     m_bbs = cv::Mat::zeros(cv::Size(5, column.rows), CV_32FC1);
 
-    #pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() ) shared(column)
+#pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() ) shared(column)
     for(uint i = 0; i < column.rows; ++i)
     {
         if(column.at<uchar>(i) == uchar(255))
@@ -114,10 +114,11 @@ void Nms::maxg(std::vector<cv::Rect> &_bboxes, std::vector<float> &_confidences)
     int idx;
     cv::Mat bbs(cv::Size(5, m_bbs.rows), CV_32FC1);
 
-    #pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() ) shared(indices, bbs) private(idx)
-    for(uint i = 0; i < indices.rows; ++i)
+#pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() ) shared(indices, bbs) private(idx)
+
+    for(uint i = 0; i < indices.rows; i++)
     {
-        idx = indices.at<int>(0, i);
+        idx = indices.at<int>(0, i); // NOTE: typecheck in "at" always fails in debug mode. It will be okay in release but obviously it is unsafe.
         bbs.at<float>(i, 0) = m_bbs.at<float>(idx, 0);
         bbs.at<float>(i, 1) = m_bbs.at<float>(idx, 1);
         bbs.at<float>(i, 2) = m_bbs.at<float>(idx, 2);
@@ -184,15 +185,15 @@ void Nms::maxg(std::vector<cv::Rect> &_bboxes, std::vector<float> &_confidences)
 
     }
 
-    #pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() )
+#pragma omp parallel for num_threads( omp_get_num_procs() * omp_get_num_threads() )
     for(uint i = 0; i < kp.size(); ++i)
     {
         if(kp.at(i))
         {
-            #pragma omp critical
+#pragma omp critical
             {
                 _bboxes.push_back(cv::Rect(bbs.at<float>(i, 0), bbs.at<float>(i, 1),
-                                                 bbs.at<float>(i, 2), bbs.at<float>(i, 3)));
+                                           bbs.at<float>(i, 2), bbs.at<float>(i, 3)));
                 _confidences.push_back(bbs.at<float>(i, 4));
             }
         }

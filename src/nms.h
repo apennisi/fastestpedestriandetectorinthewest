@@ -37,24 +37,25 @@
 
 namespace fpdw
 {
-    class Nms
-    {
-        public:
-            Nms() {;}
-            Nms(const structs::Nms &_nms);
-            void process(std::vector<cv::Rect> &bboxes, std::vector<float> &_confidences, const cv::Mat &_bbs);
-        private:
-            structs::Type m_type;
-            int m_maxn;
-            float m_thr;
-            std::vector<float> m_radii;
-            float m_overlap;
-            int m_ovrDnm;
-            int m_separate;
-            cv::Mat m_bbs;
-        private:
-            void maxg(std::vector<cv::Rect> &_bboxes, std::vector<float> &_confidences);
-    };
+class Nms
+{
+public:
+    Nms() {}
+    Nms(const structs::Nms &_nms);
+    void process(std::vector<cv::Rect> &bboxes, std::vector<float> &_confidences, const cv::Mat &_bbs);
+private:
+    structs::Type m_type;
+    int m_maxn;
+    float m_thr;
+    std::vector<float> m_radii;
+    float m_overlap;
+    int m_ovrDnm;
+    int m_separate;
+    cv::Mat m_bbs;
+
+private:
+    void maxg(std::vector<cv::Rect> &_bboxes, std::vector<float> &_confidences);
+};
 }
 
 #endif

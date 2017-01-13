@@ -68,7 +68,6 @@ cv::Mat cvMatToMat(const cv::Mat &_img)
     return image;
 }
 
-///TODO FARE UNICA FUNZIONE MATNN
 cv::Mat matToCvMat6x(float *O, const cv::Size &_sz)
 {
     cv::Mat_<cv::Vec6f> out(_sz);
