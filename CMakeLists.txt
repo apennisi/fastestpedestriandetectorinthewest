@@ -3,7 +3,18 @@ project( fpdw )
 cmake_minimum_required(VERSION 2.8)
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse -msse2 -msse3")
+
+execute_process(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
+message(STATUS "Architecture: ${ARCHITECTURE}")
+
+if( ${ARCHITECTURE} MATCHES "aarch64")
+	add_definitions(-DARM_COMPILER=ON)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+else()
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse -msse2 -msse3")
+endif()
+
+set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 
 find_package(OpenCV REQUIRED)
 

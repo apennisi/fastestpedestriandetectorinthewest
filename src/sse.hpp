@@ -5,7 +5,12 @@
 *******************************************************************************/
 #ifndef _SSE_HPP_
 #define _SSE_HPP_
+
+#ifdef ARM_COMPILER
+#include "SSE2NEON.h"
+#else
 #include <emmintrin.h> // SSE2:<e*.h>, SSE3:<p*.h>, SSE4:<s*.h>
+#endif
 
 #define RETf inline __m128
 #define RETi inline __m128i
