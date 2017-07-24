@@ -1,4 +1,4 @@
-# The Fastest Pedetrian Detector in the West (FPDW)
+# The Fastest Pedestrian Detector in the West (FPDW)
 This is my version of the Fastest Pedestrian Detector in the West based on the paper:
 * P. Dollár, S. Belongie and P. Perona "_The Fastest Pedestrian Detector in the West_", BMVC 2010.
 
